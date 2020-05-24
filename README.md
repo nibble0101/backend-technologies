@@ -19,7 +19,7 @@
           </form>
       ```
       -  LocalStrategy is a class( Not sure. Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
-  - Create an instance of LocalStrategy like:
+    - Create an instance of LocalStrategy like:
      ```javascript
         new LocalStrategy( function(username, password, done){
              //Do whatever you want here. For examle retrieving a user from a database
@@ -29,7 +29,7 @@
              })
           
      ```
-      -  The function passed in as an argument (called `verify callback`) to LocalStrategy takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
+       -  The function passed in as an argument (called `verify callback`) to LocalStrategy takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
          arguments. What purpose does `done` serve?
          ```javascript
              function(username, password, done) {
