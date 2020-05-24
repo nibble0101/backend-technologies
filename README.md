@@ -59,8 +59,11 @@
            ```
            ## **NOTE**
             > It is important to differentiate between an authentication failure (which is not a server error) and the server throwing an exception. The latter is a server exception, in which err is set to a non-null value. Authentication failures are natural conditions, in which the server is operating normally. Ensure that err remains null, and use the final argument to pass additional details about reasons for the authentication failure.
-  
-    
+  - Use `app.use` middleware in `express` to intialize `passport`. 
+  ```javascript
+       passport.use(passport.initialize());
+       passport.use(passport.session());
+  ```
     
     
 
