@@ -25,7 +25,7 @@
      ```javascript
         new LocalStrategy( function(username, password, done){   })   
      ```
-       -  The function `verify callback` takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two arguments. What purpose does `done` serve?
+       -  The function `verify callback` takes three arguments: `password`, `username` and `done`. `done` is a callback function which is invoked with 1, 2, or 3 arguments.
            ```javascript
            function(username, password, done) {
                   User.findOne({ username: username }, function (err, user) {
