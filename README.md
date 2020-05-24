@@ -4,8 +4,8 @@
 
    `passport.js` according to the [documentation](http://www.passportjs.org/) is a **Simple, unobtrusive authentication for Node.js**
    
-      **unobtrusive**: Not conspicuous or attracting attention.
-2. How to set up passport
+      **Unobtrusive**: Not conspicuous or attracting attention.
+2. How do you set up passport?
   -  Require passport
       `const passport = require('passport')`
   -  Require strategy you want to use for authentication. If you want to use local strategy, then:
@@ -46,14 +46,14 @@
                return done(null, user)
            ```
        -  How does `done` work?
-           `done` is a callback function which is passed to the `verify callback`. `verify callback`  calls the `done` callback supplying a `user`, which should be set to `false` if the credentials are not valid. If an exception occurred, `err` should be set. `done`'s function signature is: `done(err, user)`. `err` is the error object if an error occurs, `user` is the authenticated user if the user has been authenticated. `err` can be set to `null` and `user` can be set to `false` as explained below.
-           1. If the credentials are valid, `done` is called:  `return done(null, user)`. Note the `return` keyword. `done` supplies the valid credentials to `passport` ('Supplies valid credentials to passport'- Isn't `done` part of `passport`?) and sets the error to null(first argument to `done`).
-           2. If the credentials are not valid e.g. `password` or `username` is incorrect (**NOTE**: No error has occured!), `done` should be invoked with `false` instead of `user` to show an authentication failure (not server error). 
+           `done` is a callback function which is passed to the `verify callback`. `verify callback`  calls `done` supplying a `user`, which should be set to `false` if the credentials are not valid. If an exception occurred, `err` should be set. `done`'s function signature is: `done(err, user)`. `err` is the error object if an error occurs, `user` is the authenticated user if the user has been authenticated. `err` can be set to `null` and `user` can be set to `false` as explained below.
+           1. If the credentials are valid, `done` is called:  `return done(null, user)`. Note the `return` keyword. `done` supplies the valid credentials to `passport` (**'Supplies valid credentials to passport'**- Isn't `done` part of `passport`?) and sets the error to `null` (first argument to `done`).
+           2. If the credentials are not valid e.g. `password` or `username` is incorrect (**NOTE**: No error has occured!), `done` should be invoked with `false` instead of `user` to show an authentication failure (**NOT server error**). 
            ```javascript
                  done(null, false);
            ```
-           3. If an exception occurred while verifying the credentials (for example, if the database is not available), done should be invoked with an error, in conventional Node style like: `return done(err)`. Why isn't the second argument passed to `done`? Is it redundancy? What will happen if passed? 
-           4. If there is an authentication failure, an additional info message can be supplied to `done` indicating the reason for the failure. This is useful for displaying a flash message (what is flash message?) prompting the user to try again. The message should be passed as an object (not `JSON`) with `message` key like: `{message: 'Incorrect password' }`. The value of `message` key depends on the reason for authentication failure. 
+           3. If an exception occurred while verifying the credentials (for example, if the database is not available), done should be invoked with an `error`, in conventional Node style: `return done(err)`. Why isn't the second argument passed to `done`? Is it redundancy? What will happen if passed? 
+           4. If there is an authentication failure, an additional info message can be supplied to `done` indicating the reason for the failure. This is useful for displaying a flash message (What is flash message?) prompting the user to try again. The message should be passed as an object (NOT `JSON`) with a `message` key like: `{message: 'Incorrect password' }`. The value of `message` key depends on the reason for authentication failure. 
            ```javascript
                 done(null, false, {message: 'Incorrect password'})
            ```
