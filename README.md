@@ -21,13 +21,7 @@
       -  LocalStrategy is a class( Not sure. Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
   - Create an instance of LocalStrategy like:
      ```javascript
-        new LocalStrategy( function(username, password, done){
-             //Do whatever you want here. For examle retrieving a user from a database
-             
-             
-             done(null, null)
-             })
-          
+        new LocalStrategy( function(username, password, done){   }) // Pass a function called verify callback as an argument    
      ```
        -  The function passed in as an argument (called `verify callback`) to LocalStrategy takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
          arguments. What purpose does `done` serve?
