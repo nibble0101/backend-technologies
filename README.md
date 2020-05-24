@@ -4,9 +4,9 @@
    `passport.js` according to the [documentation](http://www.passportjs.org/) is a "Simple, unobtrusive authentication for Node.js"
     **unobtrusive**: not conspicuous or attracting attention.
 2. How to set up passport
-   -  Require passport
+  -  Require passport
       `const passport = require('passport')`
-   -  Require strategy you want to use for authentication. If you want to use local strategy, then:
+  -  Require strategy you want to use for authentication. If you want to use local strategy, then:
       `const LocalStrategy = require('local-strategy').Strategy`
       ## **NOTE**: 
       -  The local authentication strategy authenticates requests based on the credentials submitted through an HTML-based login form. For example:
@@ -19,7 +19,7 @@
           </form>
       ```
       -  LocalStrategy is a class( Not sure. Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
-    - Create an instance of LocalStrategy like:
+  - Create an instance of LocalStrategy like:
      ```javascript
         new LocalStrategy( function(username, password, done){
              //Do whatever you want here. For examle retrieving a user from a database
