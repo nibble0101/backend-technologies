@@ -1,8 +1,10 @@
 # Backend Technologies
 ## `passport.js`
 1. What is `passport.js`?
-   `passport.js` according to the [documentation](http://www.passportjs.org/) is a "Simple, unobtrusive authentication for Node.js"
-    **unobtrusive**: not conspicuous or attracting attention.
+
+   `passport.js` according to the [documentation](http://www.passportjs.org/) is a **Simple, unobtrusive authentication for Node.js**
+   
+      **unobtrusive**: Not conspicuous or attracting attention.
 2. How to set up passport
   -  Require passport
       `const passport = require('passport')`
