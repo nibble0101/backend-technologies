@@ -9,7 +9,7 @@
    -  Require strategy you want to use for authentication. If you want to use local strategy, then:
       `const LocalStrategy = require('local-strategy').Strategy`
       ## **NOTE**: 
-      -  The local authentication strategy authenticates requests based on the credentials submitted through an HTML-based login form.For example:
+      -  The local authentication strategy authenticates requests based on the credentials submitted through an HTML-based login form. For example:
       ```html
           <form action = '/login' method = 'POST'>
                 <label for = 'username'> UserName: </label>
@@ -18,7 +18,17 @@
                 <input type =  'password' id = 'password' name = 'password' required >
           </form>
       ```
-      -  LocalStrategy is a constructor(class- Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
+      -  LocalStrategy is a class( Not sure. Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
+  - Create an instance of LocalStrategy like:
+     ```javascript
+        new LocalStrategy( function(username, password, done){
+             //Do whatever you want here. For examle retrieving a user from a database
+             
+             
+             done(null, null)
+             })
+          
+     ```
       -  The function passed in as an argument (called `verify callback`) to LocalStrategy takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
          arguments. What purpose does `done` serve?
          ```javascript
@@ -54,16 +64,7 @@
            ```
            ## **NOTE**
             > It is important to differentiate between an authentication failure (which is not a server error) and the server throwing an exception. The latter is a server exception, in which err is set to a non-null value. Authentication failures are natural conditions, in which the server is operating normally. Ensure that err remains null, and use the final argument to pass additional details about reasons for the authentication failure.
-   - Create an instance of LocalStrategy
-     ```javascript
-        new LocalStrategy( function(username, password, done){
-             //Do whatever you want here. For examle retrieving a user from a database
-             
-             
-             done(null, null)
-             })
-          
-     ```
+  
     
     
     
