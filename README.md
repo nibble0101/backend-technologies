@@ -9,9 +9,20 @@
    -  Require strategy you want to use for authentication. If you want to use local strategy, then:
       `const LocalStrategy = require('local-strategy').Strategy`
       **NOTE**: 
-      -  LocalStrategy is a constructor(class- Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
+      -  LocalStrategy is a constructor(class- Need to look it up!). When creating an instance of LocalStrategy, you pass one argument     
+         which is a function
       -  The function takes in three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
          arguments. What purpose does `done` serve?
+   - Create an instance of LocalStrategy
+     ```javascript
+        new LocalStrategy( function(username, password, done){
+             //Do whatever you want here. For examle retrieving a user from a database
+             
+             
+             done(null, null)
+             })
+          
+     ```
     
     
     
