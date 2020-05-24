@@ -37,7 +37,7 @@
                       return done(null, user);
                       });
                     }
-             ```
+          ```
        -  How does `verify callback` work?
            When passport authenticates a user, it first parses the credentials in the `request` object e.g. `request.body` It then invokes the `verify callback` with those credentials i.e. username, password. If the credentials are valid, passport then calls `done` to supply passport with the user who has been  authenticated.
            ```javascript
