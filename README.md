@@ -10,7 +10,7 @@
       `const LocalStrategy = require('local-strategy').Strategy`
       **NOTE**: 
       -  LocalStrategy is a constructor(class- Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
-      -  The function takes in three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
+      -  The function passed in as an argument (called `verify callback`) to LocalStrategy takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
          arguments. What purpose does `done` serve?
          ```javascript
              function(username, password, done) {
@@ -26,6 +26,11 @@
                       });
                     }
             ```
+       -  How does `verify callback` work?
+           When passport authenticates a user, it first parses the credentials in the `request` object e.g. `request.body` It then invokes the `verify callback` with those credentials i.e. username, password. If the credentials are valid, passport then calls `done` to supply passport with the user who was just authenticated.
+           ```javascript
+               return done(null, user)
+           ```
    - Create an instance of LocalStrategy
      ```javascript
         new LocalStrategy( function(username, password, done){
