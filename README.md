@@ -8,7 +8,7 @@
       `const passport = require('passport')`
    -  Require strategy you want to use for authentication. If you want to use local strategy, then:
       `const LocalStrategy = require('local-strategy').Strategy`
-      **NOTE**: 
+      ## **NOTE**: 
       -  The local authentication strategy authenticates requests based on the credentials submitted through an HTML-based login form.For example:
       ```html
           <form action = '/login' method = 'POST'>
@@ -16,7 +16,7 @@
                 <input type =  'text' id = 'username' name = 'username' required >
                 <label for = 'password'> Password: </label>
                 <input type =  'password' id = 'password' name = 'password' required >
-         </form>
+          </form>
       ```
       -  LocalStrategy is a constructor(class- Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
       -  The function passed in as an argument (called `verify callback`) to LocalStrategy takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
@@ -41,7 +41,19 @@
                return done(null, user)
            ```
        -  How does `done` work?
-           `done` is a callback function which is passed to the `verify callback`. It 
+           `done` is a callback function which is passed to the `verify callback`. `verify callback`  calls the `done` callback supplying a `user`, which should be set to `false` if the credentials are not valid. If an exception occurred, `err` should be set. `done` can be called like: `done(err, user)`. `err` is the error object if an error occurs, `user` is the authenticated user if the user has been authenticated.
+           1. If the credentials are valid, `done` is called like:  `return done(null, user)`. Note the `return` keyword. `done` supplies the valid credentials to `passport` ('Supplies valid credentials to passport'- Isn't `done` part of `passport`?) and sets the error to null(first argument to `done`).
+           2. If the credentials are not valid e.g. `password` or `username` is incorrect (**NOTE**: No error has occured!), `done` should be invoked with `false` instead of `user` to show an authentication failure (not server error). 
+           ```javascript
+                 done(null, false);
+           ```
+           3. If an exception occurred while verifying the credentials (for example, if the database is not available), done should be invoked with an error, in conventional Node style like: `return done(err)`. Why isn't the second argument passed to `done`? Is it redundancy? What will happen if passed? 
+           4. If there is an authentication failure, an additional info message can be supplied to `done` indicating the reason for the failure. This is useful for displaying a flash message (what is flash message?) prompting the user to try again. The message should be passed as an object (not `JSON`) with `message` key like: `{message: 'Incorrect password' }`. The value of `message` key depends on the reason for authentication failure. 
+           ```javascript
+                done(null, false, {message: 'Incorrect password'})
+           ```
+           ## **NOTE**
+            > It is important to differentiate between an authentication failure (which is not a server error) and the server throwing an exception. The latter is a server exception, in which err is set to a non-null value. Authentication failures are natural conditions, in which the server is operating normally. Ensure that err remains null, and use the final argument to pass additional details about reasons for the authentication failure.
    - Create an instance of LocalStrategy
      ```javascript
         new LocalStrategy( function(username, password, done){
