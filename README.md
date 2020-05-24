@@ -18,13 +18,12 @@
                 <input type =  'password' id = 'password' name = 'password' required >
           </form>
       ```
-      -  LocalStrategy is a class( Not sure. Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function
+      -  LocalStrategy is a class( Not sure. Need to look it up!). When creating an instance of LocalStrategy, you pass one argument which is a function. The function passed as an argument is called `verify callback`
   - Create an instance of LocalStrategy like:
      ```javascript
-        new LocalStrategy( function(username, password, done){   }) // Pass a function called verify callback as an argument    
+        new LocalStrategy( function(username, password, done){   })   
      ```
-       -  The function passed in as an argument (called `verify callback`) to LocalStrategy takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two
-         arguments. What purpose does `done` serve?
+       -  The function `verify callback` takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two arguments. What purpose does `done` serve?
          ```javascript
              function(username, password, done) {
                   User.findOne({ username: username }, function (err, user) {
@@ -45,8 +44,8 @@
                return done(null, user)
            ```
        -  How does `done` work?
-           `done` is a callback function which is passed to the `verify callback`. `verify callback`  calls the `done` callback supplying a `user`, which should be set to `false` if the credentials are not valid. If an exception occurred, `err` should be set. `done` can be called like: `done(err, user)`. `err` is the error object if an error occurs, `user` is the authenticated user if the user has been authenticated.
-           1. If the credentials are valid, `done` is called like:  `return done(null, user)`. Note the `return` keyword. `done` supplies the valid credentials to `passport` ('Supplies valid credentials to passport'- Isn't `done` part of `passport`?) and sets the error to null(first argument to `done`).
+           `done` is a callback function which is passed to the `verify callback`. `verify callback`  calls the `done` callback supplying a `user`, which should be set to `false` if the credentials are not valid. If an exception occurred, `err` should be set. `done`'s function signature is: `done(err, user)`. `err` is the error object if an error occurs, `user` is the authenticated user if the user has been authenticated. `err` can be set to `null` and `user` can be set to `false` as explained below.
+           1. If the credentials are valid, `done` is called:  `return done(null, user)`. Note the `return` keyword. `done` supplies the valid credentials to `passport` ('Supplies valid credentials to passport'- Isn't `done` part of `passport`?) and sets the error to null(first argument to `done`).
            2. If the credentials are not valid e.g. `password` or `username` is incorrect (**NOTE**: No error has occured!), `done` should be invoked with `false` instead of `user` to show an authentication failure (not server error). 
            ```javascript
                  done(null, false);
