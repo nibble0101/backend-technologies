@@ -24,8 +24,8 @@
         new LocalStrategy( function(username, password, done){   })   
      ```
        -  The function `verify callback` takes three arguments: `password`, `username` and `done`. `done` is a callback function which also takes two arguments. What purpose does `done` serve?
-         ```javascript
-             function(username, password, done) {
+           ```javascript
+           function(username, password, done) {
                   User.findOne({ username: username }, function (err, user) {
                       if (err) { return done(err); }
                       if (!user) {
@@ -37,7 +37,7 @@
                       return done(null, user);
                       });
                     }
-          ```
+           ```
        -  How does `verify callback` work?
            When passport authenticates a user, it first parses the credentials in the `request` object e.g. `request.body` It then invokes the `verify callback` with those credentials i.e. username, password. If the credentials are valid, passport then calls `done` to supply passport with the user who has been  authenticated.
            ```javascript
