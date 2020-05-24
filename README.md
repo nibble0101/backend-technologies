@@ -59,11 +59,20 @@
            ```
            ## **NOTE**
             > It is important to differentiate between an authentication failure (which is not a server error) and the server throwing an exception. The latter is a server exception, in which err is set to a non-null value. Authentication failures are natural conditions, in which the server is operating normally. Ensure that err remains null, and use the final argument to pass additional details about reasons for the authentication failure.
-  - Use `app.use` middleware in `express` to intialize `passport`. 
+  - Use `app.use` to mount middleware which intializes `passport`. 
   ```javascript
        passport.use(passport.initialize());
        passport.use(passport.session());
   ```
+   Only `passport.initialize()` is necessary for initializing `passport`. If your application uses persistent login sessions,  
+   `passport.session()` middleware must also be used.
+   **NOTE**
+   > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use     
+     passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
+     ```javascript
+         app.use(session({ secret: "cats" }));
+         app.use(passport.initialize());
+     ```
     
     
 
