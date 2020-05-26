@@ -100,7 +100,7 @@
         By default, if authentication fails, Passport will respond with a 401 Unauthorized status, and any additional route handlers will not be invoked. If authentication succeeds, the next handler will be invoked and the req.user property will be set to the authenticated user.
         
         
-#References
+# References
 1. [toon.io](http://toon.io/understanding-passportjs-authentication-flow/)
 2. [node.js user authentication with passport local strategy](https://medium.com/@johnnysitu/node-js-user-authentication-with-passport-local-strategy-37605fd99715)
 3. [www.passportjs.org/docs](http://www.passportjs.org/docs/downloads/html/)
