@@ -98,6 +98,48 @@
         `passport.authenticate` takes the type of authentication strategy and an optional object. The strategy passed as argument must first be configured. 
         By default, if authentication fails, Passport will respond with a 401 Unauthorized status, and any additional route handlers will not be invoked. If authentication succeeds, the next handler will be invoked and the req.user property will be set to the authenticated user.
         
+        `passport.authenticate` can be passed an object as second argument. The second argument can be used for setting `redirect` options, `flash messages`e.t.c
+         - Redirects
+            Redirects are usually issued after authenticating request. Below is an illustration of how to issue redirects after authentication:
+            ```javascript
+                app.post('/',
+                              passport.authenticate('local', 
+                                                               { 
+                                                              successRedirect: '/',
+                                                              failureRedirect: '/login'
+                                                              }
+                                                      )
+                           
+                        );
+            ```
+            In this case, the redirect options override the default behavior ( What is the default behavior? ). Upon successful authentication, the user will be redirected to the home page. If authentication fails, the user will be redirected back to the login page for another attempt.
+       - Flash Messages
+          `failureFlash` property can be added to the object passed as second argument to `passport.authenticate` in order to display status information to the user. 
+          ```
+              app.post('/',
+                              passport.authenticate('local', 
+                                                               { 
+                                                              successRedirect: '/',
+                                                              failureRedirect: '/login',
+                                                              failureFlash: true
+                                                              }
+                                                      )
+                           
+                        );
+          ```
+         Setting the failureFlash option to true instructs Passport to flash an error message using the message given by the strategy's verify callback, if any. This is often the best approach, because the verify callback can make the most accurate determination of why authentication failed.Alternatively, the flash message can be set specifically.
+         ```javascript
+              passport.authenticate('local', { failureFlash: 'Invalid username or password.' });
+         ```
+         A successFlash option is available which flashes a success message when authentication succeeds.
+         ```javscript
+             passport.authenticate('local', { successFlash: 'Welcome!' });
+         ```
+         Is it possible (logical) to provide `failureFlash` and `successFlash` concurrently to the object?
+         **NOTE**
+         
+           Using flash messages requires a `req.flash()` function. Express 2.x provided this functionality, however it was removed from Express 3.x. Use of [connect-flash](https://github.com/jaredhanson/connect-flash) middleware is recommended to provide this functionality when using Express 3.x.
+
         
 # References
 1. [toon.io](http://toon.io/understanding-passportjs-authentication-flow/)
