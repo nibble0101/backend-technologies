@@ -25,7 +25,7 @@
          -  LocalStrategy is a class( Not sure. Need to look it up). When creating an instance of LocalStrategy, you pass one argument which is a function. The function passed as an argument is called `verify callback`.
      - Create an instance of LocalStrategy:
         ```javascript
-           new LocalStrategy( function(username, password, done){   })   
+          const localStratey = new LocalStrategy(function(username, password, done){   })   // Check whether it can be assigned to a variable
         ```
           -  The function `verify callback` takes three arguments: `password`, `username` and `done`. `done` is a callback function which is invoked with 1, 2, or 3 arguments.
               ```javascript
@@ -43,11 +43,13 @@
                        }
               ```
           -  How does `verify callback` work?
+          
               When passport is authenticating a user, it first parses the credentials in the `request` object e.g. `request.body` It then invokes the `verify callback` with those credentials i.e. username, password. If the credentials are valid, passport then calls `done` to supply passport with the user who has been  authenticated.
               ```javascript
                   return done(null, user)
               ```
           -  How does `done` work?
+          
               `done` is a callback function which is passed to the `verify callback`. `done`'s function signature is: `done(err, user)`. `verify callback`  calls `done` supplying a `user` if the credentials are valid, setting `err` to `null`. Set user to `false` if the credentials are not valid, and `err` to `null`. If an exception occurred, `err` shouldn't be null. It should be `err`.`err` is the error object if an error occurs, `user` is the authenticated user if the user has been authenticated. This is further summarized below:
               1. If the credentials are valid, `done` is called:  `return done(null, user)`. Note the `return` keyword. `done` supplies the valid credentials to `passport` (**'Supplies valid credentials to passport'**- Isn't `done` part of `passport`?) and sets the `err` to `null`.
               2. If the credentials are not valid e.g. `password` or `username` is incorrect (**NOTE**: No error has occured!), `done` should be invoked with `false` as second argument instead of `user` to show an authentication failure (**NOT server error**). 
@@ -73,19 +75,19 @@
       > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use     
         passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
        
-     `javascript
+     ```javascript
            app.use(session({ secret: "cats" }));
            app.use(passport.initialize());
-      `
+      ```
       The above doesn't make sense. Look it up.
-    - Use `app.use` to mount the strategy whose instance you have created above
+    - Use `app.use` to mount the strategy. An instance of your strategy is passed to `app.use`
     
     ```javascript
-        app.use(localStrategy);
+        app.use(localStrategy); // localStrategy is an instance of your LocalStrategy class
     ```
-    **NOTE:**
     
-    `localStrategy` is an instance of your `LocalStrategy` class
+    
+    
          
         
     
