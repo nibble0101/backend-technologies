@@ -9,6 +9,23 @@
      -  Require passport
      
          `const passport = require('passport')`
+     - Use `app.use` to mount application-level middleware which intializes `passport`. 
+        ```javascript
+          passport.use(passport.initialize());
+          passport.use(passport.session());
+          ```
+          Only `passport.initialize()` is necessary for initializing `passport`. If your application uses persistent login sessions,  
+          `passport.session()` middleware must also be used.
+
+      **NOTE**
+      > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use     
+        passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
+       
+     ```javascript
+           app.use(session({ secret: "cats" }));
+           app.use(passport.initialize());
+      ```
+      The above doesn't make sense. Look it up.
      -  Require strategy you want to use for authentication. If you want to use local strategy, then:
      
          `const LocalStrategy = require('local-strategy').Strategy`
@@ -63,29 +80,13 @@
               ```
               ## **NOTE**
                > It is important to differentiate between an authentication failure (which is not a server error) and the server throwing an exception. The latter is a server exception, in which `err` is set to a non-null value. Authentication failures are natural conditions, in which the server is operating normally. Ensure that `err` remains null, and use the final argument to pass additional details about reasons for the authentication failure.
-     - Use `app.use` to mount application-level middleware which intializes `passport`. 
-        ```javascript
-          passport.use(passport.initialize());
-          passport.use(passport.session());
-          ```
-          Only `passport.initialize()` is necessary for initializing `passport`. If your application uses persistent login sessions,  
-          `passport.session()` middleware must also be used.
-
-      **NOTE**
-      > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use     
-        passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
-       
-     ```javascript
-           app.use(session({ secret: "cats" }));
-           app.use(passport.initialize());
-      ```
-      The above doesn't make sense. Look it up.
+   
     - Use `app.use` to mount the strategy. An instance of your strategy is passed to `app.use`
     
     ```javascript
         app.use(localStrategy); // localStrategy is an instance of your LocalStrategy class
     ```
-    - Use passport.authenticate(), specifying the strategy, to authenticate requests.
+    - Use `passport.authenticate()`, specifying the strategy, to authenticate requests.
     
     `passport.authenticate` is a router-level middleware (Check correctness of this). The code below illustrates how it is mounted.
      ```javascript
@@ -93,6 +94,8 @@
         res.redirect('/'); 
       });
     ```
+     **More about passport.authenticate
+     
      
     
     
