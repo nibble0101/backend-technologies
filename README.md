@@ -145,13 +145,13 @@
          **NOTE**
          
            Using flash messages requires a `req.flash()` function. Express 2.x provided this functionality, however it was removed from `Express 3.x.` ( Why was it removed if useful?). Use of [connect-flash](https://github.com/jaredhanson/connect-flash) middleware is recommended to provide this functionality when using `Express 3.x.`
-      - Disable Sessions
+      - **Disable Sessions**
       
         After successfully authenticating a user, passport will establish a persistent login. What is a persistent login? This is a situation where a user provides login credentials once. The client will again be prompted to enter login credentials after logging out. This is useful for the common scenario of users accessing a web application via a browser. However, in some cases, session support is not necessary. For example, API servers typically require credentials to be supplied with each request. When this is the case, session support can be safely disabled by setting the session option to false.
         ```javascript
             app.get('/api/users/me', passport.authenticate('basic', { session: false }), function (req, res) {});                            
         ```
-      - Custom Callback
+      - **Custom Callback**
       
         It should also be noted that `passport.authenticate` can be called from within the route handler, rather than being used as route middleware. This gives the callback access to the req and res objects through closure.**QUESTION**: What will necessitate calling `passport.authenticate` from the route handler rather than using it as a `route middleware`? After all it will pass execution to subsequent handlers once authentication is successful. Why can't the handler wait to have access to req, res objects after succesful authentication?
         
