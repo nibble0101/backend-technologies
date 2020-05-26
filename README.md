@@ -17,19 +17,20 @@
           Only `passport.initialize()` is necessary for initializing `passport`. If your application uses persistent login sessions,  
           `passport.session()` middleware must also be used.
 
-      **NOTE**
-      > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use     
-        passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
-       
-     ```javascript
-           app.use(session({ secret: "cats" }));
-           app.use(passport.initialize());
-      ```
-      The above doesn't make sense. Look it up.
+         **NOTE**
+         > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use     
+           passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
+
+        ```javascript
+              app.use(session({ secret: "cats" }));
+              app.use(passport.initialize());
+         ```
+         The above doesn't make sense. Look it up.
      -  Require strategy you want to use for authentication. If you want to use local strategy, then:
      
          `const LocalStrategy = require('local-strategy').Strategy`
          ## **NOTE**: 
+         -  In real-world applications you `require` at the top of the application.
          -  The local authentication strategy authenticates users using a username and password. Username and password are also called **credentials**. These credentials are submitted through an HTML-based login form. For example:
          ```html
              <form action = '/login' method = 'POST'>
@@ -83,18 +84,20 @@
    
     - Use `app.use` to mount the strategy. An instance of your strategy is passed to `app.use`
     
-    ```javascript
-        app.use(localStrategy); // localStrategy is an instance of your LocalStrategy class
-    ```
+       ```javascript
+           app.use(localStrategy); // localStrategy is an instance of your LocalStrategy class
+       ```
     - Use `passport.authenticate()`, specifying the strategy, to authenticate requests.
     
-    `passport.authenticate` is a router-level middleware (Check correctness of this). The code below illustrates how it is mounted.
-     ```javascript
-     app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res) {
-        res.redirect('/'); 
-      });
-    ```
-     **More about passport.authenticate
+       `passport.authenticate` is a router-level middleware (Check correctness of this). The code below illustrates how it is mounted.
+        ```javascript
+        app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res) {
+           res.redirect('/'); 
+         });
+       ```
+        **More about passport.authenticate**
+        
+        
      
      
     
