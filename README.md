@@ -116,9 +116,10 @@
                         );
             ```
             In this case, the redirect options override the default behavior of calling the next route handler if authentication is successful or responding with a 401 Unauthorized status message if authentication is not successful. Due to the second argument to `passport.authenticate`, upon successful authentication, the user will be redirected to the home page. If authentication fails, the user will be redirected back to the login page for another attempt.
-       - Flash Messages
+       - **Flash Messages**
+       
           `failureFlash` property can be added to the object passed as second argument to `passport.authenticate` in order to display status information to the user. Below is an illustration of how.
-          ```
+          ```javascript
               app.post('/',
                               passport.authenticate('local', 
                                                                { 
@@ -130,20 +131,25 @@
                            
                         );
           ```
-         Setting the failureFlash option to true instructs Passport to flash an error message using the message given by the strategy's `verify callback`, if any. This is often the best approach, because the `verify callback` can make the most accurate determination of why authentication failed.Alternatively, the flash message can be set specifically.
+         Setting the `failureFlash` option to true instructs Passport to flash an error message using the message given by the strategy's `verify callback`, if any. This is often the best approach, because the `verify callback` can make the most accurate determination of why authentication failed.Alternatively, the flash message can be set specifically.
          ```javascript
               passport.authenticate('local', { failureFlash: 'Invalid username or password.' });
          ```
-         A successFlash option is also available which flashes a success message when authentication succeeds.
+         A `successFlash` option is also available which flashes a success message when authentication succeeds.
          ```javscript
              passport.authenticate('local', { successFlash: 'Welcome!' });
          ```
-         Is it possible (logical) to provide `failureFlash` and `successFlash` concurrently to the object ?
+         Is it possible ( logical ) to provide `failureFlash` and `successFlash` concurrently to the object ?
+         
          **NOTE**
          
-           Using flash messages requires a `req.flash()` function. Express 2.x provided this functionality, however it was removed from Express 3.x. ( Why was it removed if useful?). Use of [connect-flash](https://github.com/jaredhanson/connect-flash) middleware is recommended to provide this functionality when using Express 3.x.
-
-        
+           Using flash messages requires a `req.flash()` function. Express 2.x provided this functionality, however it was removed from `Express 3.x.` ( Why was it removed if useful?). Use of [connect-flash](https://github.com/jaredhanson/connect-flash) middleware is recommended to provide this functionality when using `Express 3.x.`
+   - Disable Sessions
+     After successfully authenticating a user, passport will establish a persistent login. What is a persistent login? This is a situation where a user provides login credentials once. The client will again be prompted to enter login credentials after logging out. This is useful for the common scenario of users accessing a web application via a browser. However, in some cases, session support is not necessary. For example, API servers typically require credentials to be supplied with each request. When this is the case, session support can be safely disabled by setting the session option to false.
+     ```javascript
+         app.get('/api/users/me', passport.authenticate('basic', { session: false }), function (req, res) {});                            
+     ```
+  -Custom Callback
 # References
 1. [toon.io](http://toon.io/understanding-passportjs-authentication-flow/)
 2. [node.js user authentication with passport local strategy](https://medium.com/@johnnysitu/node-js-user-authentication-with-passport-local-strategy-37605fd99715)
