@@ -45,7 +45,7 @@
         ```javascript
           const localStratey = new LocalStrategy(function(username, password, done){   })   // Check whether it can be assigned to a variable
         ```
-          -  The function `verify callback` takes three arguments: `password`, `username` and `done`. `done` is a callback function which is invoked with 1, 2, or 3 arguments.
+          -  The function `verify callback` takes three arguments: `password`, `username` and `done`. `done` is a callback function which is invoked with 1, 2, or 3 arguments.Below is an example of `verify callback`.
               ```javascript
               function(username, password, done) {
                      User.findOne({ username: username }, function (err, user) {
@@ -64,7 +64,7 @@
           
               When passport is authenticating a user, it first parses the credentials in the `request` object e.g. `request.body` It then invokes the `verify callback` with those credentials i.e. username, password. If the credentials are valid, passport then calls `done` to supply passport with the user who has been  authenticated.
               ```javascript
-                  return done(null, user)
+                  return done(null, user);
               ```
           -  How does `done` work?
           
@@ -77,28 +77,33 @@
               3. If an exception occurred while verifying the credentials (for example, if the database is not available), done should be invoked with an `error` i.e. first argument shouldn't be `null`. It should be `err`. In conventional Node style you can call it like: `return done(err)`. Why isn't the second argument passed to `done`? Is it redundancy? What will happen if passed? 
               4. If there is an authentication failure, an additional info message can be supplied to `done` indicating the reason for the failure. This is useful for displaying a flash message (**What is flash message?**) prompting the user to try again. The message should be passed as an object (**NOT `JSON`**) with a `message` key: `{message: 'Incorrect password' }`. The value of `message` key depends on the reason for authentication failure. 
               ```javascript
-                   done(null, false, {message: 'Incorrect password'})
+                   done(null, false, {message: 'Incorrect password'});
               ```
               ## **NOTE**
                > It is important to differentiate between an authentication failure (which is not a server error) and the server throwing an exception. The latter is a server exception, in which `err` is set to a non-null value. Authentication failures are natural conditions, in which the server is operating normally. Ensure that `err` remains null, and use the final argument to pass additional details about reasons for the authentication failure.
    
-    - Use `app.use` to mount the strategy. An instance of your strategy is passed to `app.use`
+    - Use `app.use` to mount the strategy. An instance of your strategy is passed to `app.use`.
     
        ```javascript
            app.use(localStrategy); // localStrategy is an instance of your LocalStrategy class
        ```
-    - Use `passport.authenticate()`, specifying the strategy, to authenticate requests.
+    - Use `passport.authenticate`, specifying the strategy, to authenticate requests.
     
        `passport.authenticate` is a router-level middleware (Check correctness of this). The code below illustrates how it is mounted.
         ```javascript
-        app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res) {
+        app.post('/login', passport.authenticate('local'), function(req, res) {
            res.redirect('/'); 
          });
        ```
         **More about passport.authenticate**
+        `passport.authenticate` takes the type of authentication strategy and an optional object. The strategy passed as argument must first be configured. 
+        By default, if authentication fails, Passport will respond with a 401 Unauthorized status, and any additional route handlers will not be invoked. If authentication succeeds, the next handler will be invoked and the req.user property will be set to the authenticated user.
         
         
-     
+#References
+1. [toon.io](http://toon.io/understanding-passportjs-authentication-flow/)
+2. [node.js user authentication with passport local strategy](https://medium.com/@johnnysitu/node-js-user-authentication-with-passport-local-strategy-37605fd99715)
+3. [www.passportjs.org/docs](http://www.passportjs.org/docs/downloads/html/)
      
     
     
