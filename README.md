@@ -94,12 +94,15 @@
            res.redirect('/'); 
          });
        ```
-        **More about passport.authenticate**
-        `passport.authenticate` takes the type of authentication strategy and an optional object. The strategy passed as argument must first be configured. 
+        **More about `passport.authenticate`**
+        
+        `passport.authenticate` takes the type of authentication strategy and an optional object as arguments. The strategy passed as argument must first be configured.
+        
         By default, if authentication fails, Passport will respond with a 401 Unauthorized status, and any additional route handlers will not be invoked. If authentication succeeds, the next handler will be invoked and the req.user property will be set to the authenticated user.
         
         `passport.authenticate` can be passed an object as second argument. The second argument can be used for setting `redirect` options, `flash messages`e.t.c
-         - Redirects
+         - **Redirects**
+         
             Redirects are usually issued after authenticating request. Below is an illustration of how to issue redirects after authentication:
             ```javascript
                 app.post('/',
@@ -112,9 +115,9 @@
                            
                         );
             ```
-            In this case, the redirect options override the default behavior ( What is the default behavior? ). Upon successful authentication, the user will be redirected to the home page. If authentication fails, the user will be redirected back to the login page for another attempt.
+            In this case, the redirect options override the default behavior of calling the next route handler if authentication is successful or responding with a 401 Unauthorized status message if authentication is not successful. Due to the second argument to `passport.authenticate`, upon successful authentication, the user will be redirected to the home page. If authentication fails, the user will be redirected back to the login page for another attempt.
        - Flash Messages
-          `failureFlash` property can be added to the object passed as second argument to `passport.authenticate` in order to display status information to the user. 
+          `failureFlash` property can be added to the object passed as second argument to `passport.authenticate` in order to display status information to the user. Below is an illustration of how.
           ```
               app.post('/',
                               passport.authenticate('local', 
@@ -127,18 +130,18 @@
                            
                         );
           ```
-         Setting the failureFlash option to true instructs Passport to flash an error message using the message given by the strategy's verify callback, if any. This is often the best approach, because the verify callback can make the most accurate determination of why authentication failed.Alternatively, the flash message can be set specifically.
+         Setting the failureFlash option to true instructs Passport to flash an error message using the message given by the strategy's `verify callback`, if any. This is often the best approach, because the `verify callback` can make the most accurate determination of why authentication failed.Alternatively, the flash message can be set specifically.
          ```javascript
               passport.authenticate('local', { failureFlash: 'Invalid username or password.' });
          ```
-         A successFlash option is available which flashes a success message when authentication succeeds.
+         A successFlash option is also available which flashes a success message when authentication succeeds.
          ```javscript
              passport.authenticate('local', { successFlash: 'Welcome!' });
          ```
-         Is it possible (logical) to provide `failureFlash` and `successFlash` concurrently to the object?
+         Is it possible (logical) to provide `failureFlash` and `successFlash` concurrently to the object ?
          **NOTE**
          
-           Using flash messages requires a `req.flash()` function. Express 2.x provided this functionality, however it was removed from Express 3.x. Use of [connect-flash](https://github.com/jaredhanson/connect-flash) middleware is recommended to provide this functionality when using Express 3.x.
+           Using flash messages requires a `req.flash()` function. Express 2.x provided this functionality, however it was removed from Express 3.x. ( Why was it removed if useful?). Use of [connect-flash](https://github.com/jaredhanson/connect-flash) middleware is recommended to provide this functionality when using Express 3.x.
 
         
 # References
