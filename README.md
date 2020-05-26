@@ -18,8 +18,7 @@
           `passport.session()` middleware must also be used.
 
          **NOTE**
-         > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use     
-           passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
+         > Enabling session support is entirely optional, though it is recommended for most applications. If enabled, be sure to use passport.session() before passport.session() to ensure that the login session is restored in the correct order.E.g.
 
         ```javascript
               app.use(session({ secret: "cats" }));
