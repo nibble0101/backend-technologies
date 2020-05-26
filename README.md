@@ -168,7 +168,9 @@
               })(req, res, next);
           });
         ```
-        
+        In the example above, if authentication failed, user will be set to false. If an exception occurred, err will be set. An optional info argument will be passed, containing additional details provided by the strategy's verify callback.
+
+The callback can use the arguments supplied to handle the authentication result as desired. Note that when using a custom callback, it becomes the application's responsibility to establish a session (by calling req.login()) and send a response.
 # References
 1. [toon.io](http://toon.io/understanding-passportjs-authentication-flow/)
 2. [node.js user authentication with passport local strategy](https://medium.com/@johnnysitu/node-js-user-authentication-with-passport-local-strategy-37605fd99715)
