@@ -85,6 +85,15 @@
     ```javascript
         app.use(localStrategy); // localStrategy is an instance of your LocalStrategy class
     ```
+    - Use passport.authenticate(), specifying the strategy, to authenticate requests.
+    
+    `passport.authenticate` is a router-level middleware (Check correctness of this). The code below illustrates how it is mounted.
+     ```javascript
+     app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function(req, res) {
+        res.redirect('/'); 
+      });
+    ```
+     
     
     
     
